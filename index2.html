@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星之声科技有限公司</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    body {
+      font-family: 'Microsoft YaHei', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    header {
+      background: rgba(0,0,0,0.85);
+      padding: 20px 40px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      color: #00e5ff;
+      font-size: 24px;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #fff;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      color: #00e5ff;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+    }
+    .hero h2 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      animation: fadeInUp 2s ease;
+      position: relative;
+      z-index: 2;
+    }
+    .hero p {
+      font-size: 20px;
+      color: #ccc;
+      animation: fadeInUp 3s ease;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes fadeInUp {
+      0% {opacity: 0; transform: translateY(30px);}
+      100% {opacity: 1; transform: translateY(0);}
+    }
+
+    .robot-arm {
+      position: absolute;
+      top: 50%;
+      left: -200px;
+      width: 200px;
+      height: 200px;
+      background: url('https://cdn-icons-png.flaticon.com/512/4712/4712035.png') no-repeat center/contain;
+      animation: moveArm 10s infinite linear;
+      opacity: 0.2;
+    }
+    @keyframes moveArm {
+      0% {left: -200px; transform: rotate(0deg);}
+      50% {left: 50%; transform: rotate(20deg);}
+      100% {left: 110%; transform: rotate(-20deg);}
+    }
+
+    .footer {
+      background: #111;
+      text-align: center;
+      padding: 30px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    html {scroll-behavior: smooth;}
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+  <header>
+    <h1>星之声科技有限公司</h1>
+    <nav>
+      <a href="about.html">关于我们</a>
+      <a href="vision.html">愿景使命</a>
+      <a href="industry.html">产业布局</a>
+      <a href="services.html">服务与解决方案</a>
+      <a href="partners.html">合作伙伴</a>
+      <a href="team.html">团队介绍</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="robot-arm"></div>
+    <div>
+      <h2>引领未来 · 智能无限</h2>
+      <p>专注于计算机、云计算与人工智能产业，打造智慧新时代</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2025 星之声科技有限公司 版权所有</p>
+  </div>
+</body>
+</html>
