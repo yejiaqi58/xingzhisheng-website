@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>产业布局 - 星之声科技有限公司</title>
+
+  <!-- 粒子 + 3D 倾斜 -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'SF Pro Display', 'Microsoft YaHei', sans-serif;
+      background: #0a0a1a;
+      color: #e0f7ff;
+      overflow-x: hidden;
+    }
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* 导航栏 */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 18px 40px;
+      background: rgba(10, 10, 30, 0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+    nav a {
+      color: #88cfff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    nav a:hover {
+      color: #00d4ff;
+      text-shadow: 0 0 12px rgba(0, 212, 255, 0.8);
+    }
+
+    /* 布局：左侧目录 + 右侧内容 */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      margin-top: 80px;
+    }
+
+    /* 左侧目录 */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 80px;
+      width: 280px;
+      height: calc(100vh - 80px);
+      background: rgba(10, 15, 40, 0.8);
+      backdrop-filter: blur(12px);
+      padding: 40px 20px;
+      border-right: 1px solid rgba(0, 212, 255, 0.2);
+      overflow-y: auto;
+      z-index: 900;
+    }
+    .sidebar h2 {
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      color: #00d4ff;
+      text-align: center;
+      letter-spacing: 3px;
+    }
+    .sidebar ul {
+      list-style: none;
+    }
+    .sidebar li {
+      margin: 18px 0;
+    }
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      color: #88cfff;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.4s;
+      font-weight: 500;
+      position: relative;
+    }
+    .sidebar a:hover, .sidebar a.active {
+      background: rgba(0, 212, 255, 0.2);
+      color: #00d4ff;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+      transform: translateX(8px);
+    }
+    .sidebar a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 6px;
+      height: 6px;
+      background: #00d4ff;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .sidebar a.active::before {
+      opacity: 1;
+    }
+
+    /* 右侧内容 */
+    .content {
+      flex: 1;
+      margin-left: 280px;
+      padding: 40px;
+    }
+    .section {
+      margin-bottom: 120px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+      font-weight: 200;
+      margin-bottom: 24px;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 4px;
+    }
+    .section-desc {
+      font-size: 1.2rem;
+      color: #bbeeff;
+      line-height: 2;
+      max-width: 800px;
+      margin-bottom: 40px;
+    }
+
+    /* 产业卡片 */
+    .industry-card {
+      background: rgba(15, 25, 60, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 24px;
+      padding: 32px;
+      margin: 40px 0;
+      transition: all 0.5s;
+      position: relative;
+      overflow: hidden;
+    }
+    .industry-card:hover {
+      border-color: #00d4ff;
+      box-shadow: 0 30px 60px rgba(0, 212, 255, 0.3);
+      transform: translateY(-12px);
+    }
+    .industry-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 24px;
+    }
+    .stats {
+      display: flex;
+      gap: 30px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00d4ff;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: #88cfff;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 60px 20px;
+      color: #88cfff;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(0, 212, 255, 0.2);
+      margin-top: 100px;
+    }
+
+    @media (max-width: 992px) {
+      .layout { flex-direction: column; }
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+      }
+      .content { margin-left: 0; padding: 20px; }
+      .sidebar h2 { font-size: 1.5rem; margin-bottom: 20px; }
+      .sidebar ul { display: flex; flex-wrap: wrap; gap: 10px; }
+      .sidebar li { margin: 5px; }
+      .sidebar a { padding: 8px 16px; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+
+  <header>
+    <h1>星之声科技</h1>
+    <nav>
+      <a href="index.html">主页</a>
+      <a href="about.html">关于我们</a>
+      <a href="vision.html">愿景使命</a>
+      <a href="industry.html"class="active">产业布局</a>
+      <a href="services.html">服务解决方案</a>
+      <a href="partners.html">合作伙伴</a>
+      <a href="team.html">团队介绍</a>
+      <a href="device.html" >设备介绍</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+
+    <!-- 左侧目录 -->
+    <aside class="sidebar">
+      <h2>产业布局</h2>
+      <ul>
+        <li><a href="#ai" class="active">人工智能</a></li>
+        <li><a href="#cloud">云计算</a></li>
+        <li><a href="#bigdata">大数据</a></li>
+        <li><a href="#manufacture">智能制造</a></li>
+        <li><a href="#quantum">量子计算</a></li>
+        <li><a href="#edge">边缘计算</a></li>
+      </ul>
+    </aside>
+
+    <!-- 右侧内容 -->
+    <main class="content">
+
+      <!-- 人工智能 -->
+      <section id="ai" class="section">
+        <h2 class="section-title">人工智能</h2>
+        <p class="section-desc">
+          自主研发 <strong>星智 X1 大模型</strong>，参数规模达 <strong>700B</strong>，支持多模态输入，<br>
+          在金融风控、医疗影像、智能客服等领域部署超 <strong>10,000+</strong> 实例。
+        </p>
+        <div class="industry-card" data-tilt>
+          <img src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="AI大模型">
+          <div class="stats">
+            <div class="stat"><div class="stat-num">700B</div><div class="stat-label">参数规模</div></div>
+            <div class="stat"><div class="stat-num">99.2%</div><div class="stat-label">准确率</div></div>
+            <div class="stat"><div class="stat-num">50ms</div><div class="stat-label">平均延迟</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 云计算 -->
+      <section id="cloud" class="section">
+        <h2 class="section-title">云计算</h2>
+        <p class="section-desc">
+          提供 <strong>全球 18 个可用区</strong> 的云原生平台，支持 <strong>Serverless、K8s、微服务</strong>，<br>
+          已为 <strong>300+</strong> 家企业实现云迁移，平均降本 <strong>45%</strong>。
+        </p>
+        <div class="industry-card" data-tilt>
+          <img src="https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="云计算">
+          <div class="stats">
+            <div class="stat"><div class="stat-num">18</div><div class="stat-label">可用区</div></div>
+            <div class="stat"><div class="stat-num">99.99%</div><div class="stat-label">SLA</div></div>
+            <div class="stat"><div class="stat-num">300+</div><div class="stat-label">企业客户</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 大数据 -->
+      <section id="bigdata" class="section">
+        <h2 class="section-title">大数据</h2>
+        <p class="section-desc">
+          自研 <strong>星湖分布式数据库</strong>，支持 <strong>PB 级</strong> 数据实时分析，<br>
+          在电商推荐、反欺诈、城市大脑中广泛应用。
+        </p>
+        <div class="industry-card" data-tilt>
+          <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="大数据">
+          <div class="stats">
+            <div class="stat"><div class="stat-num">10PB</div><div class="stat-label">日处理量</div></div>
+            <div class="stat"><div class="stat-num"><1s</div><div class="stat-label">查询延迟</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 智能制造 -->
+      <section id="manufacture" class="section">
+        <h2 class="section-title">智能制造</h2>
+        <p class="section-desc">
+          部署 <strong>数字孪生工厂</strong>，实现 <strong>预测性维护</strong>，设备故障率下降 <strong>70%</strong>，<br>
+          生产效率提升 <strong>300%</strong>。
+        </p>
+        <div class="industry-card" data-tilt>
+          <img src="images/about-hero.jpg" alt="智能工厂">
+          <div class="stats">
+            <div class="stat"><div class="stat-num">70%</div><div class="stat-label">故障下降</div></div>
+            <div class="stat"><div class="stat-num">300%</div><div class="stat-label">效率提升</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 量子计算 -->
+      <section id="quantum" class="section">
+        <h2 class="section-title">量子计算</h2>
+        <p class="section-desc">
+          与中科院合作，推出 <strong>64 量子比特云平台</strong>，<br>
+          在药物筛选、材料模拟领域实现 <strong>指数级加速</strong>。
+        </p>
+        <div class="industry-card" data-tilt>
+          <img src="https://images.pexels.com/photos/5867445/pexels-photo-5867445.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="量子计算">
+          <div class="stats">
+            <div class="stat"><div class="stat-num">64</div><div class="stat-label">量子比特</div></div>
+            <div class="stat"><div class="stat-num">1000×</div><div class="stat-label">加速比</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 边缘计算 -->
+      <section id="edge" class="section">
+        <h2 class="section-title">边缘计算</h2>
+        <p class="section-desc">
+          <strong>星边 X1</strong> 边缘 AI 盒子，单设备支持 <strong>100+ 路视频流</strong> 实时分析，<br>
+          广泛用于智慧城市、安防监控。
+        </p>
+        <div class="industry-card" data-tilt>
+          <img src="https://images.pexels.com/photos/442152/pexels-photo-442152.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="边缘计算">
+          <div class="stats">
+            <div class="stat"><div class="stat-num">100+</div><div class="stat-label">路视频</div></div>
+            <div class="stat"><div class="stat-num">30ms</div><div class="stat-label">端到端延迟</div></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 星之声科技有限公司 | 布局未来，智造星空</p>
+  </footer>
+
+  <script>
+    // 粒子背景
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 100 },
+        color: { value: ["#00d4ff", "#7b00ff", "#00ff9d"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.6, random: true },
+        size: { value: 2, random: true },
+        line_linked: { enable: true, distance: 120, color: "#00d4ff", opacity: 0.25, width: 1 },
+        move: { enable: true, speed: 1.8 }
+      },
+      interactivity: { events: { onhover: { enable: true, mode: "repulse" } } },
+      retina_detect: true
+    });
+
+    // 3D 倾斜
+    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+      max: 10,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.3
+    });
+
+    // 目录高亮 + 滚动动画
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.sidebar a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 150;
+        if (scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').slice(1) === current) {
+          link.classList.add('active');
+        }
+      });
+
+      // 滚动显示动画
+      sections.forEach(sec => {
+        if (sec.getBoundingClientRect().top < window.innerHeight * 0.8) {
+          sec.classList.add('visible');
+        }
+      });
+    });
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

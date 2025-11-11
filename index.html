@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <!-- 关键：让页面宽度随设备宽度缩放 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>星之声科技有限公司</title>
+
+  <!-- 粒子背景 -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <!-- 3D 倾斜 -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'SF Pro Display','Microsoft YaHei',sans-serif;
+      background:#0a0a1a;
+      color:#e0f7ff;
+      overflow-x:hidden;
+    }
+    #particles-js {position:fixed;width:100%;height:100%;z-index:-1;}
+
+    /* ---------- 导航栏 ---------- */
+    header {
+      position:fixed;top:0;left:0;right:0;
+      padding:18px 40px;
+      background:rgba(10,10,30,0.7);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(0,212,255,.2);
+      z-index:1000;
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    header h1 {
+      font-size:1.6rem;font-weight:500;
+      background:linear-gradient(90deg,#00d4ff,#7b00ff);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    nav {display:flex;gap:28px;}
+    nav a {
+      color:#88cfff;text-decoration:none;font-size:.95rem;font-weight:500;
+      transition:all .3s;
+    }
+    nav a:hover {color:#00d4ff;text-shadow:0 0 12px rgba(0,212,255,.8);}
+    nav a.active {color:#00d4ff;text-shadow:0 0 12px rgba(0,212,255,.8);font-weight:600;}
+
+    /* ---------- 英雄区 ---------- */
+    .hero {
+      height:100vh;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;text-align:center;
+      position:relative;overflow:hidden;
+    }
+    .hero-video {
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      object-fit:cover;opacity:.6;filter:brightness(.8);
+    }
+    .hero-content {position:relative;z-index:2;max-width:800px;padding:0 20px;}
+    .hero-title {
+      font-size:4.5rem;font-weight:200;letter-spacing:4px;
+      background:linear-gradient(90deg,#00d4ff,#7b00ff,#00ff9d);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      margin-bottom:24px;animation:glow 3s ease-in-out infinite alternate;
+    }
+    .hero-subtitle {font-size:1.6rem;font-weight:300;color:#88cfff;margin-bottom:48px;line-height:1.6;}
+    .cta-button {
+      background:linear-gradient(45deg,#00d4ff,#7b00ff);
+      color:#fff;padding:14px 32px;border-radius:50px;
+      text-decoration:none;font-size:1.1rem;font-weight:500;
+      transition:all .4s;box-shadow:0 8px 20px rgba(0,212,255,.3);
+    }
+    .cta-button:hover {transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,212,255,.5);}
+
+    /* ---------- 核心领域卡片 ---------- */
+    .features {padding:100px 40px;max-width:1400px;margin:0 auto;}
+    .features-title {
+      font-size:2.8rem;font-weight:200;text-align:center;
+      background:linear-gradient(90deg,#00d4ff,#7b00ff);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      margin-bottom:80px;letter-spacing:3px;
+    }
+    .features-grid {
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:40px;
+    }
+    .feature-card {
+      background:rgba(15,25,60,.7);backdrop-filter:blur(12px);
+      border:1px solid rgba(0,212,255,.2);border-radius:24px;
+      padding:32px;text-align:center;transition:all .5s;
+    }
+    .feature-card:hover {
+      border-color:#00d4ff;box-shadow:0 30px 60px rgba(0,212,255,.3);
+      transform:translateY(-12px);
+    }
+    .feature-icon {
+      width:80px;height:80px;margin-bottom:24px;border-radius:50%;
+      background:rgba(0,212,255,.2);display:flex;align-items:center;
+      justify-content:center;font-size:2rem;
+    }
+    .feature-title {font-size:1.6rem;margin-bottom:16px;color:#00d4ff;}
+    .feature-desc {font-size:1rem;color:#bbeeff;line-height:1.6;}
+
+    .footer {text-align:center;padding:60px 20px;color:#88cfff;font-size:.9rem;
+             border-top:1px solid rgba(0,212,255,.2);}
+
+    @keyframes glow {
+      from {text-shadow:0 0 20px rgba(0,212,255,.6);}
+      to   {text-shadow:0 0 50px rgba(0,212,255,.9),0 0 70px rgba(123,0,255,.5);}
+    }
+
+    /* ============================== 手机端自适应 ============================== */
+    @media (max-width: 768px) {
+      /* 导航栏垂直堆叠 */
+      header {flex-direction:column;padding:15px 20px;}
+      header h1 {margin-bottom:8px;}
+      nav {gap:12px;flex-wrap:wrap;justify-content:center;}
+
+      /* 英雄区文字缩小 */
+      .hero-title {font-size:2.6rem;letter-spacing:2px;}
+      .hero-subtitle {font-size:1.2rem;margin-bottom:32px;}
+      .cta-button {padding:12px 28px;font-size:1rem;}
+
+      /* 卡片区单列 */
+      .features {padding:60px 20px;}
+      .features-title {font-size:2rem;margin-bottom:50px;}
+      .features-grid {gap:24px;}
+      .feature-card {padding:24px;}
+      .feature-icon {width:60px;height:60px;font-size:1.6rem;}
+      .feature-title {font-size:1.4rem;}
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {font-size:2.2rem;}
+      .hero-subtitle {font-size:1.1rem;}
+      .cta-button {padding:10px 24px;font-size:.95rem;}
+    }
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+
+  <!-- 导航栏 -->
+  <header>
+    <h1>星之声科技</h1>
+    <nav>
+      <a href="index.html">主页</a>
+      <a href="about.html">关于我们</a>
+      <a href="vision.html">愿景使命</a>
+      <a href="industry.html">产业布局</a>
+      <a href="services.html">服务解决方案</a>
+      <a href="partners.html">合作伙伴</a>
+      <a href="team.html">团队介绍</a>
+      <a href="device.html" >设备介绍</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+  </header>
+
+  <!-- 英雄区 -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-digital-background-327-small.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h2 class="hero-title">引领未来 · 智能无限</h2>
+      <p class="hero-subtitle">专注于计算机、云计算与人工智能，打造智慧新时代。<br>我们以创新驱动，赋能全球数字化转型。</p>
+      <a href="contact.html" class="cta-button">立即咨询</a>
+    </div>
+  </section>
+
+  <!-- 核心领域 -->
+  <section class="features">
+    <h2 class="features-title">核心领域</h2>
+    <div class="features-grid">
+      <div class="feature-card" data-tilt><div class="feature-icon">AI</div><h3 class="feature-title">人工智能</h3><p class="feature-desc">大模型驱动的多模态 AI，赋能企业智能决策与自动化。</p></div>
+      <div class="feature-card" data-tilt><div class="feature-icon">Cloud</div><h3 class="feature-title">云计算</h3><p class="feature-desc">弹性可扩展的云原生平台，安全高效的混合云解决方案。</p></div>
+      <div class="feature-card" data-tilt><div class="feature-icon">Data</div><h3 class="feature-title">大数据</h3><p class="feature-desc">实时分析与洞察，助力企业从数据中挖掘无限价值。</p></div>
+      <div class="feature-card" data-tilt><div class="feature-icon">Factory</div><h3 class="feature-title">智能制造</h3><p class="feature-desc">数字孪生与预测维护，提升生产效率与智能水平。</p></div>
+    </div>
+  </section>
+
+  <footer class="footer"><p>© 2025 星之声科技有限公司 版权所有</p></footer>
+
+  <script>
+    particlesJS("particles-js",{
+      particles:{number:{value:80,density:{enable:true,value_area:800}},
+        color:{value:["#00d4ff","#7b00ff","#00ff9d"]},shape:{type:"circle"},
+        opacity:{value:.5,random:true},size:{value:3,random:true},
+        line_linked:{enable:true,distance:150,color:"#00d4ff",opacity:.3,width:1},
+        move:{enable:true,speed:2}},
+      interactivity:{detect_on:"canvas",events:{onhover:{enable:true,mode:"repulse"}}},
+      retina_detect:true});
+
+    VanillaTilt.init(document.querySelectorAll("[data-tilt]"),{
+      max:8,speed:400,glare:true,"max-glare":.2});
+  </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>设备介绍 - 星之声科技有限公司</title>
+
+  <!-- 粒子背景 -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <!-- 3D 倾斜 -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'SF Pro Display', 'Microsoft YaHei', sans-serif;
+      background: #0a0a1a;
+      color: #e0f7ff;
+      overflow-x: hidden;
+    }
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* 导航栏 */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 18px 40px;
+      background: rgba(10, 10, 30, 0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+    nav a {
+      color: #88cfff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    nav a:hover {
+      color: #00d4ff;
+      text-shadow: 0 0 12px rgba(0, 212, 255, 0.8);
+    }
+    nav a.active {
+      color: #00d4ff;
+      text-shadow: 0 0 12px rgba(0, 212, 255, 0.8);
+      font-weight: 600;
+    }
+
+    /* 英雄区 - iPhone 风格 */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      margin-top: -80px;
+    }
+    .hero-title {
+      font-size: 4.5rem;
+      font-weight: 200;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff, #00ff9d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: #88cfff;
+      max-width: 700px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    .hero-image {
+      width: 80%;
+      max-width: 900px;
+      margin: 40px 0;
+      border-radius: 24px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    }
+    .cta-button {
+      background: linear-gradient(45deg, #00d4ff, #7b00ff);
+      color: #fff;
+      padding: 16px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 500;
+      transition: all 0.4s;
+      box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
+    }
+    .cta-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(0, 212, 255, 0.6);
+    }
+
+    /* 内容区块 */
+    .section {
+      padding: 100px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .section-title {
+      font-size: 2.8rem;
+      font-weight: 200;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 50px;
+    }
+
+    /* 特性卡片 */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin: 60px 0;
+    }
+    .feature-card {
+      background: rgba(15, 25, 60, 0.7);
+      border-radius: 24px;
+      padding: 30px;
+      transition: all 0.4s;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px rgba(0, 212, 255, 0.3);
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .feature-title {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #00d4ff;
+    }
+    .feature-desc {
+      font-size: 1rem;
+      color: #bbeeff;
+      line-height: 1.7;
+    }
+
+    /* 图片轮播 */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 60px 0;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.4s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 25px 50px rgba(0, 212, 255, 0.3);
+    }
+
+    /* CTA */
+    .final-cta {
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .final-cta p {
+      font-size: 1.3rem;
+      color: #88cfff;
+      margin-bottom: 30px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 60px 20px;
+      color: #88cfff;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(0, 212, 255, 0.2);
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.8rem; }
+      .hero-subtitle { font-size: 1.2rem; }
+      .hero-image { width: 95%; }
+      .section-title { font-size: 2.2rem; }
+      .feature-card { padding: 20px; }
+      .feature-title { font-size: 1.2rem; }
+      .cta-button { padding: 14px 28px; font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 粒子背景 -->
+  <div id="particles-js"></div>
+
+  <!-- 导航栏 -->
+  <header>
+    <h1>星之声科技</h1>
+    <nav>
+      <a href="index.html">主页</a>
+      <a href="about.html">关于我们</a>
+      <a href="vision.html">愿景使命</a>
+      <a href="industry.html">产业布局</a>
+      <a href="services.html">服务解决方案</a>
+      <a href="partners.html">合作伙伴</a>
+      <a href="team.html">团队介绍</a>
+      <a href="device.html" class="active">设备介绍</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+  </header>
+
+  <!-- 英雄区 -->
+  <section class="hero">
+    <h1 class="hero-title">CNC 数控机床</h1>
+    <p class="hero-subtitle">
+      智能制造的核心引擎<br>
+      精度 • 效率 • 无限可能
+    </p>
+    <img src="images/machine1.jpg" alt="CNC 数控机床" class="hero-image">
+    <a href="contact.html" class="cta-button">立即咨询</a>
+  </section>
+
+  <!-- 特性介绍 -->
+  <section class="section">
+    <h2 class="section-title">重新定义精密制造</h2>
+    <div class="features">
+      <div class="feature-card" data-tilt>
+        <div class="feature-icon">Precision</div>
+        <h3 class="feature-title">极致精度</h3>
+        <p class="feature-desc">0.005mm 重复定位精度，支持复杂曲面加工，满足航空航天级要求。</p>
+      </div>
+      <div class="feature-card" data-tilt>
+        <div class="feature-icon">Speed</div>
+        <h3 class="feature-title">高效生产</h3>
+        <p class="feature-desc">24/7 连续运行，自动换刀仅需 2.5 秒，生产效率提升 70%。</p>
+      </div>
+      <div class="feature-card" data-tilt>
+        <div class="feature-icon">Intelligence</div>
+        <h3 class="feature-title">智能控制</h3>
+        <p class="feature-desc">G-code 编程 + CAD/CAM 一键导入，支持 AI 路径优化与故障预测。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 图片展示 -->
+  <section class="section">
+    <h2 class="section-title">一览无余</h2>
+    <div class="gallery">
+      <img src="images/CNC_machine.jpg" alt="CNC 机床正面" data-tilt>
+      <img src="images/Cnc_lathe.png" alt="CNC 机床操作" data-tilt>
+      <img src="images/Wheel_Machining.jpg" alt="CNC 加工细节" data-tilt>
+    </div>
+  </section>
+
+  <!-- 最终 CTA -->
+  <div class="final-cta">
+    <p>准备好开启智能制造新篇章？</p>
+    <a href="contact.html" class="cta-button">联系我们获取演示</a>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <p>© 2025 星之声科技有限公司 | 学生作业项目 - 智能制造未来</p>
+  </footer>
+
+  <!-- 脚本 -->
+  <script>
+    // 粒子背景
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80 },
+        color: { value: ["#00d4ff", "#7b00ff", "#00ff9d"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.6, random: true },
+        size: { value: 2, random: true },
+        line_linked: { enable: true, distance: 120, color: "#00d4ff", opacity: 0.25, width: 1 },
+        move: { enable: true, speed: 1.5 }
+      },
+      interactivity: { events: { onhover: { enable: true, mode: "repulse" } } },
+      retina_detect: true
+    });
+
+    // 3D 倾斜
+    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+      max: 8,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.3
+    });
+  </script>
+</body>
+</html>

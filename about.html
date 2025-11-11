@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>关于我们 - 星之声科技有限公司</title>
+
+  <!-- 粒子背景 + 3D 倾斜 -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'SF Pro Display', 'Microsoft YaHei', sans-serif;
+      background: #0a0a1a;
+      color: #e0f7ff;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* 导航栏 - 苹果风透明磨砂 */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 40px;
+      background: rgba(10, 10, 30, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    }
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+    nav a {
+      color: #88cfff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    nav a:hover {
+      color: #00d4ff;
+      text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
+    }
+
+    /* 主容器 */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 120px 20px 80px;
+      text-align: center;
+    }
+
+    /* 标题 - 苹果风极简大字 */
+    .title {
+      font-size: 4.5rem;
+      font-weight: 200;
+      letter-spacing: 8px;
+      margin-bottom: 24px;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff, #00ff9d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 50px rgba(0, 212, 255, 0.6);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes titleGlow {
+      from { text-shadow: 0 0 30px rgba(0, 212, 255, 0.5); }
+      to { text-shadow: 0 0 80px rgba(0, 212, 255, 0.9), 0 0 100px rgba(123, 0, 255, 0.6); }
+    }
+
+    .subtitle {
+      font-size: 1.4rem;
+      color: #88cfff;
+      max-width: 800px;
+      margin: 0 auto 80px;
+      line-height: 2;
+      font-weight: 300;
+    }
+
+    /* 图片卡片 - 悬浮发光 */
+    .image-card {
+      position: relative;
+      margin: 80px auto;
+      max-width: 900px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      transition: all 0.6s ease;
+    }
+    .image-card:hover {
+      transform: translateY(-20px);
+      box-shadow: 0 40px 80px rgba(0, 212, 255, 0.3),
+                  0 0 60px rgba(0, 212, 255, 0.5);
+    }
+    .image-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .image-card:hover img {
+      transform: scale(1.05);
+    }
+    .image-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), transparent 50%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.6s;
+    }
+    .image-card:hover::after {
+      opacity: 1;
+    }
+
+    /* 文字区块 */
+    .text-block {
+      max-width: 800px;
+      margin: 100px auto;
+      font-size: 1.2rem;
+      color: #bbeeff;
+      line-height: 2;
+    }
+    .text-block strong {
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 500;
+    }
+
+    /* 愿景使命 */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      margin: 120px 0;
+    }
+    .mission-card {
+      background: rgba(15, 25, 60, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: left;
+      transition: all 0.5s;
+    }
+    .mission-card:hover {
+      border-color: #00d4ff;
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+      transform: translateY(-10px);
+    }
+    .mission-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+      color: #00d4ff;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 60px 20px;
+      color: #88cfff;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(0, 212, 255, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .title { font-size: 2.8rem; letter-spacing: 4px; }
+      .subtitle { font-size: 1.1rem; }
+      .mission-grid { grid-template-columns: 1fr; }
+      header { padding: 15px 20px; flex-direction: column; gap: 15px; }
+      nav { gap: 20px; flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 粒子星空 -->
+  <div id="particles-js"></div>
+
+  <!-- 导航栏 -->
+  <header>
+    <h1>星之声科技</h1>
+    <nav>
+      <a href="index.html">主页</a>
+      <a href="about.html">关于我们</a>
+      <a href="vision.html">愿景使命</a>
+      <a href="industry.html">产业布局</a>
+      <a href="services.html">服务解决方案</a>
+      <a href="partners.html">合作伙伴</a>
+      <a href="team.html">团队介绍</a>
+      <a href="device.html" >设备介绍</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+  </header>
+
+  <div class="container">
+
+    <!-- 主标题 -->
+    <h1 class="title">关于我们</h1>
+    <p class="subtitle">
+      星之声科技有限公司是一家致力于<br>
+      <strong>计算机科学、云计算与人工智能</strong>领域的创新型企业。<br>
+      我们以科技创新为核心驱动力，推动产业升级与数字化转型，<br>
+      为全球客户提供高效、安全、智能的解决方案。
+    </p>
+
+    <!-- 核心图片（你已下载） -->
+    <div class="image-card" data-tilt data-tilt-max="8">
+      <img src="images/about-hero.jpg" alt="智能工厂与AI研发">
+    </div>
+
+    <!-- 公司介绍 -->
+    <div class="text-block">
+      <p>
+        成立于 <strong>2025 年</strong>，星之声科技汇聚了来自 <strong>硅谷、清华、北大</strong> 的顶尖人才，<br>
+        专注于 <strong>AI 大模型、量子计算、边缘计算</strong> 等前沿技术。<br>
+        我们相信，<strong>科技的本质是解放人类想象力</strong>。
+      </p>
+      <p style="margin-top: 32px;">
+        我们的产品已服务 <strong>500+</strong> 家全球企业，<br>
+        覆盖 <strong>智能制造、金融科技、智慧城市</strong> 等领域，<br>
+        累计降低客户成本 <strong>40%</strong>，提升效率 <strong>300%</strong>。
+      </p>
+    </div>
+
+    <!-- 愿景使命 -->
+    <div class="mission-grid">
+      <div class="mission-card" data-tilt>
+        <h3>愿景</h3>
+        <p>让每一次计算都更智能，<br>让每一个行业都因AI而重塑。</p>
+      </div>
+      <div class="mission-card" data-tilt>
+        <h3>使命</h3>
+        <p>用云原生架构与大模型能力，<br>为企业构建可信、可扩展的数字底座。</p>
+      </div>
+      <div class="mission-card" data-tilt>
+        <h3>价值观</h3>
+        <p>创新、开放、极致、共赢。</p>
+      </div>
+    </div>
+
+    <!-- 更多图片（CDN，无需下载） -->
+    <div class="image-card" data-tilt data-tilt-max="8">
+      <img src="https://images.pexels.com/photos/3861964/pexels-photo-3861964.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="AI芯片研发实验室">
+    </div>
+
+    <div class="text-block">
+      <p>
+        我们的 <strong>自研 AI 芯片「星核 X1」</strong> 已实现 <strong>7nm 制程</strong>，<br>
+        单芯片算力达 <strong>500 TOPS</strong>，能效比行业领先 <strong>60%</strong>。
+      </p>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 星之声科技有限公司 版权所有 | 让我们一起定义未来</p>
+  </footer>
+
+  <script>
+    // 粒子背景
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80 },
+        color: { value: ["#00d4ff", "#7b00ff", "#00ff9d"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#00d4ff", opacity: 0.2, width: 1 },
+        move: { enable: true, speed: 1.5 }
+      },
+      interactivity: { events: { onhover: { enable: true, mode: "repulse" } } },
+      retina_detect: true
+    });
+
+    // 3D 卡片倾斜
+    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+      max: 8,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.2
+    });
+  </script>
+</body>
+</html>

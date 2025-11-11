@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>联系我们 - 星之声科技有限公司</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- 粒子特效（可删，但保留更炫） -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Microsoft YaHei', Arial, sans-serif;
+      background: #0a0a1a;
+      color: #e0f7ff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* 导航栏 */
+    header {
+      padding: 20px 40px;
+      background: rgba(10, 10, 30, 0.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    nav a {
+      color: #88cfff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      color: #00d4ff;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+    }
+
+    /* 主内容 */
+    .container {
+      text-align: center;
+      padding: 60px 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .title {
+      font-size: 3rem;
+      font-weight: 100;
+      letter-spacing: 6px;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff, #00ff9d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+      animation: glow 2s infinite alternate;
+    }
+
+    .contact-card {
+      background: rgba(15, 25, 60, 0.7);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 24px;
+      padding: 40px;
+      margin: 40px auto;
+      max-width: 500px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+    .contact-card h2 {
+      color: #00d4ff;
+      margin-bottom: 30px;
+    }
+    .info-item {
+      margin: 20px 0;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    /* 二维码容器 */
+    .qrcode-box {
+      margin: 30px auto;
+      width: 200px;
+      height: 200px;
+      background: white;
+      padding: 15px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+      animation: float 3s ease-in-out infinite;
+    }
+    .qrcode-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
+      to { text-shadow: 0 0 40px rgba(0, 212, 255, 0.9); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px;
+      color: #88cfff;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(0, 212, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 粒子背景 -->
+  <div id="particles-js"></div>
+
+  <!-- 导航栏 -->
+  <header>
+    <h1>星之声科技有限公司</h1>
+    <nav>
+      <a href="index.html">主页</a>
+      <a href="about.html">关于我们</a>
+      <a href="vision.html">愿景使命</a>
+      <a href="industry.html">产业布局</a>
+      <a href="services.html">服务解决方案</a>
+      <a href="partners.html">合作伙伴</a>
+      <a href="team.html">团队介绍</a>
+      <a href="device.html" >设备介绍</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+  </header>
+
+  <!-- 主内容 -->
+  <div class="container">
+    <h1 class="title">星之声科技</h1>
+
+    <div class="contact-card">
+      <h2>联系我们</h2>
+
+      <div class="info-item">
+        <span>地址</span>
+        <span>中国 · 北京市中关村科技园</span>
+      </div>
+
+      <div class="info-item">
+        <span>电话</span>
+        <span>+86 010-88888888</span>
+      </div>
+
+      <div class="info-item">
+        <span>邮箱</span>
+        <span>contact@xingzhisheng.com</span>
+      </div>
+
+      <!-- 你的本地二维码 -->
+      <div class="qrcode-box">
+        <img src="images/qrcode.png" alt="公司二维码">
+      </div>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <p>© 2025 星之声科技有限公司 - 保留所有权利</p>
+  </footer>
+
+  <script>
+    // 粒子背景
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80 },
+        color: { value: ["#00d4ff", "#7b00ff", "#00ff9d"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.6, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#00d4ff", opacity: 0.3, width: 1 },
+        move: { enable: true, speed: 2 }
+      },
+      interactivity: { events: { onhover: { enable: true, mode: "repulse" } } },
+      retina_detect: true
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>合作伙伴 - 星之声科技有限公司</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- 粒子背景 -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <!-- 3D倾斜效果 -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Microsoft YaHei', 'Arial', sans-serif;
+      background: #0a0a1a;
+      color: #e0f7ff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 20px 40px;
+      background: rgba(10, 10, 30, 0.6);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      font-size: 1.9rem;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+    }
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+    nav a {
+      color: #88cfff;
+      text-decoration: none;
+      font-size: 1rem;
+      position: relative;
+      transition: all 0.3s;
+    }
+    nav a:hover {
+      color: #00d4ff;
+      text-shadow: 0 0 12px rgba(0, 212, 255, 0.8);
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -8px;
+      left: 0;
+      background: #00d4ff;
+      transition: width 0.3s;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .title {
+      font-size: 3.8rem;
+      font-weight: 100;
+      letter-spacing: 12px;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #00d4ff, #7b00ff, #00ff9d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(0, 212, 255, 0.7);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    .subtitle {
+      font-size: 1.3rem;
+      color: #88cfff;
+      letter-spacing: 3px;
+      margin-bottom: 60px;
+      line-height: 1.8;
+    }
+
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 40px;
+      margin: 50px 0;
+      justify-items: center;
+    }
+    .partner-card {
+      background: rgba(15, 25, 60, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 20px;
+      padding: 25px;
+      width: 180px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .partner-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .partner-card:hover::before {
+      opacity: 1;
+    }
+    .partner-card:hover {
+      transform: translateY(-15px) scale(1.08);
+      border-color: #00d4ff;
+      box-shadow: 0 25px 50px rgba(0, 212, 255, 0.4),
+                  0 0 30px rgba(0, 212, 255, 0.6);
+    }
+    .partner-card img {
+      max-width: 85%;
+      max-height: 75%;
+      object-fit: contain;
+      filter: brightness(1);
+      transition: all 0.4s;
+    }
+    .partner-card:hover img {
+      filter: brightness(1.5);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: #88cfff;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(0, 212, 255, 0.2);
+      margin-top: 100px;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
+      to { text-shadow: 0 0 50px rgba(0, 212, 255, 0.9), 0 0 70px rgba(123, 0, 255, 0.5); }
+    }
+
+    @media (max-width: 768px) {
+      .title { font-size: 2.5rem; letter-spacing: 6px; }
+      .partners-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+      .partner-card { width: 140px; height: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+
+  <header>
+    <h1>星之声科技有限公司</h1>
+    <nav>
+      <a href="index.html">主页</a>
+      <a href="about.html">关于我们</a>
+      <a href="vision.html">愿景使命</a>
+      <a href="industry.html">产业布局</a>
+      <a href="services.html">服务解决方案</a>
+      <a href="partners.html">合作伙伴</a>
+      <a href="team.html">团队介绍</a>
+      <a href="device.html" >设备介绍</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1 class="title">合作伙伴</h1>
+    <p class="subtitle">
+      我们与全球多家顶尖科技巨头、科研机构及行业领军企业<br>
+      建立长期战略合作，共同推动人工智能与云计算前沿创新
+    </p>
+
+    <div class="partners-grid">
+      <!-- Microsoft -->
+      <div class="partner-card" data-tilt>
+        <img src="images/microsoft-color.svg" alt="Microsoft">
+      </div>
+
+      <!-- Amazon → 替换为 Huawei（你有） -->
+      <div class="partner-card" data-tilt>
+        <img src="images/huawei-color.svg" alt="Huawei">
+      </div>
+
+      <!-- Google -->
+      <div class="partner-card" data-tilt>
+        <img src="images/google-brand-color.svg" alt="Google">
+      </div>
+
+      <!-- IBM -->
+      <div class="partner-card" data-tilt>
+        <img src="images/ibm.svg" alt="IBM">
+      </div>
+
+      <!-- NVIDIA -->
+      <div class="partner-card" data-tilt>
+        <img src="images/nvidia-color.svg" alt="NVIDIA">
+      </div>
+
+      <!-- Tencent -->
+      <div class="partner-card" data-tilt>
+        <img src="images/tencent-brand-color.svg" alt="Tencent">
+      </div>
+    </div>
+
+    <p style="margin-top:60px; color:#88cfff; font-size:1.1rem; line-height:1.8;">
+      未来，我们将继续拓展全球合作网络，<br>
+      与更多顶级伙伴共建 <strong>AI+量子计算生态联盟</strong>
+    </p>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 星之声科技有限公司 版权所有</p>
+  </footer>
+
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 90 },
+        color: { value: ["#00d4ff", "#7b00ff", "#00ff9d"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.6, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 140, color: "#00d4ff", opacity: 0.3, width: 1 },
+        move: { enable: true, speed: 2 }
+      },
+      interactivity: { events: { onhover: { enable: true, mode: "repulse" } } },
+      retina_detect: true
+    });
+
+    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+      max: 15,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.3
+    });
+  </script>
+</body>
+</html>
